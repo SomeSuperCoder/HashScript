@@ -7,8 +7,6 @@ A programming language for developing SmartContracts on the NeonSmartChain!
 
 To declare a variable use the var keyword followed by a name, an equals sign and a value:
 
-``var name = <value>``
-
 Examples:
 ```javascript
 var some_int = 34
