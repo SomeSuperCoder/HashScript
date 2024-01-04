@@ -1,5 +1,8 @@
-fun i_will_do_something(callback)
-    return callback(2)
+fun fibonacci(n)
+    if n == 1 or n == 2:
+        return 1
+    end
+    return fibonacci(n - 1) + fibonacci(n - 2)
 end
-
-print(i_will_do_something(fun (a) -> a ^ 2))
+ 
+print(fibonacci(10))

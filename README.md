@@ -215,7 +215,7 @@ To add an element to a list use the plus operator:
 ```javascript
 var my_list = [1, 2, 3, "coffee", "capybara"]
 print(my_list)
-my_list + "another item"
+var my_list = my_list + "another item"
 print(my_list)
 ```
 

@@ -7,6 +7,7 @@ from strings_with_arrows import *
 import string
 import os
 import math
+import copy
 
 #######################################
 # CONSTANTS
@@ -97,7 +98,8 @@ class Position:
         return self
 
     def copy(self):
-        return Position(self.idx, self.ln, self.col, self.fn, self.ftxt)
+        # return Position(self.idx, self.ln, self.col, self.fn, self.ftxt)
+        return copy.copy(self)
 
 
 #######################################
@@ -281,7 +283,8 @@ class Lexer:
 
         escape_characters = {
             'n': '\n',
-            't': '\t'
+            't': '\t',
+            "\\": "\\"
         }
 
         while self.current_char != None and (self.current_char != '"' or escape_character):
@@ -1409,7 +1412,8 @@ class Value:
         return RTResult().failure(self.illegal_operation())
 
     def copy(self):
-        raise Exception('No copy method defined')
+        # raise Exception('No copy method defined')
+        return copy.copy(self)
 
     def is_true(self):
         return False
@@ -1517,10 +1521,11 @@ class Number(Value):
         return Number(1 if self.value == 0 else 0).set_context(self.context), None
 
     def copy(self):
-        copy = Number(self.value)
-        copy.set_pos(self.pos_start, self.pos_end)
-        copy.set_context(self.context)
-        return copy
+        # copy = Number(self.value)
+        # copy.set_pos(self.pos_start, self.pos_end)
+        # copy.set_context(self.context)
+        # return copy
+        return copy.copy(self)
 
     def is_true(self):
         return self.value != 0
@@ -1595,10 +1600,11 @@ class String(Value):
         return len(self.value) > 0
 
     def copy(self):
-        copy = String(self.value)
-        copy.set_pos(self.pos_start, self.pos_end)
-        copy.set_context(self.context)
-        return copy
+        # copy = String(self.value)
+        # copy.set_pos(self.pos_start, self.pos_end)
+        # copy.set_context(self.context)
+        # return copy
+        return copy.copy(self)
 
     def __str__(self):
         return self.value
@@ -1614,7 +1620,13 @@ class List(Value):
 
     def added_to(self, other):
         new_list = self.copy()
-        new_list.elements.append(other)
+        new_list.elements = new_list.elements + [other]
+        # print("=========")
+        # print(self.elements)
+        # print(new_list.elements)
+        # print("=========")
+        # print(new_list.elements is self.elements)
+        # print(new_list is self)
         return new_list, None
 
     def subbed_by(self, other):
@@ -1654,10 +1666,12 @@ class List(Value):
             return None, Value.illegal_operation(self, other)
 
     def copy(self):
-        copy = List(self.elements)
-        copy.set_pos(self.pos_start, self.pos_end)
-        copy.set_context(self.context)
-        return copy
+        # copy = List(self.elements)
+        # copy.set_pos(self.pos_start, self.pos_end)
+        # copy.set_context(self.context)
+        # return copy
+
+        return copy.copy(self)
 
     def __str__(self):
         return ", ".join([str(x) for x in self.elements])
@@ -1732,10 +1746,11 @@ class Function(BaseFunction):
         return res.success(ret_value)
 
     def copy(self):
-        copy = Function(self.name, self.body_node, self.arg_names, self.should_auto_return)
-        copy.set_context(self.context)
-        copy.set_pos(self.pos_start, self.pos_end)
-        return copy
+        # copy = Function(self.name, self.body_node, self.arg_names, self.should_auto_return)
+        # copy.set_context(self.context)
+        # copy.set_pos(self.pos_start, self.pos_end)
+        # return copy
+        return copy.copy(self)
 
     def __repr__(self):
         return f"<function {self.name}>"
@@ -1763,10 +1778,12 @@ class BuiltInFunction(BaseFunction):
         raise Exception(f'No execute_{self.name} method defined')
 
     def copy(self):
-        copy = BuiltInFunction(self.name)
-        copy.set_context(self.context)
-        copy.set_pos(self.pos_start, self.pos_end)
-        return copy
+        # copy = BuiltInFunction(self.name)
+        # copy.set_context(self.context)
+        # copy.set_pos(self.pos_start, self.pos_end)
+        # return copy
+
+        return copy.copy(self)
 
     def __repr__(self):
         return f"<built-in function {self.name}>"
@@ -2266,7 +2283,7 @@ global_symbol_table = SymbolTable()
 global_symbol_table.set("None", Number.null)
 global_symbol_table.set("False", Number.false)
 global_symbol_table.set("True", Number.true)
-global_symbol_table.set("PI", Number.math_PI)
+global_symbol_table.set("pi", Number.math_PI)
 global_symbol_table.set("print", BuiltInFunction.print)
 global_symbol_table.set("print_ret", BuiltInFunction.print_ret)
 global_symbol_table.set("input", BuiltInFunction.input)
