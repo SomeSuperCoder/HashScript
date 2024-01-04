@@ -22,7 +22,9 @@ var some_string = "HashSript is cool!"
 
 The language supports multiple assignment with this syntax
 
-``var a = var b = var c = 3``
+```javascript
+var a = var b = var c = 3
+```
 
 ### Printing
 
@@ -190,4 +192,71 @@ Output:
 3
 4
 5
+```
+
+### Lists
+
+Here is how to create a list
+```javascript
+var my_list = [1, 2, 3, "coffee", "capybara"]
+```
+
+To add an element to a list use the plus operator:
+```javascript
+var my_list = [1, 2, 3, "coffee", "capybara"]
+print(my_list)
+my_list + "another item"
+print(my_list)
+```
+
+Output:
+```
+1, 2, 3, coffee, capybara
+1, 2, 3, coffee, capybara, another item
+```
+
+To remove an element from a list use the minus operator
+```javascript
+var my_list = [1, 2, 3, "coffee", "capybara"]
+print(my_list)
+my_list - 0
+print(my_list)
+```
+
+Output:
+```
+1, 2, 3, coffee, capybara
+2, 3, coffee, capybara
+```
+
+To get an element from a list use the division operator
+```javascript
+var my_list = [1, 2, 3, "coffee", "capybara"]
+print(my_list / 0)
+print(my_list / 1)
+print(my_list / 3)
+print(my_list / 4)
+print(my_list / -1)
+print(my_list / -2)
+```
+Output:
+```
+1
+2
+coffee
+capybara
+capybara
+coffee
+```
+
+To combine two lists use the multiplication operator
+```javascript
+var list_one = [1, 2, 3]
+var list_two = [4, 5, 6]
+print(list_one * list_two)
+```
+
+Output
+```
+1, 2, 3, 4, 5, 6
 ```
