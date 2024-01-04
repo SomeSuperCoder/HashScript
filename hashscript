@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+
+import basic
+import sys
+
+file_name = sys.argv[1]
+contents = open("file.hs", "r").read()
+result, error = basic.run('file.hs', contents)
+
+if error:
+    print(error.as_string())
