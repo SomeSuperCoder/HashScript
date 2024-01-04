@@ -26,9 +26,7 @@ var a = var b = var c = 3
 
 ### Printing
 
-To pint a value to the standard output use
-
-``print(<value>)``
+Here is how to print to the standard output
 
 Examples:
 ```python
