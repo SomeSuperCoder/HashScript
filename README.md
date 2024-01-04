@@ -43,6 +43,20 @@ print(123)
 print(6.4)
 ```
 
+### How to change a variables value
+When changing a variables value you still will need to use the var keyword
+```javascript
+var a = 3
+print(a)
+var a = 4
+print(a)
+```
+Output:
+```
+3
+4
+```
+
 ### If statements
 
 Example:
@@ -57,7 +71,7 @@ else then
     print("Yet another something")
 end
 ```
-Or you can use the ":" symbol instead of the then keyword:
+Or you can use the ":" symbol instead of the then keyword(in all later examples the ":" symbol will be used instead of the then keyword):
 ```python
 var a = 1213
 
