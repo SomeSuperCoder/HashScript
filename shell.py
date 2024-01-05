@@ -1,9 +1,9 @@
-import basic
+import runner
 
 while True:
     text = input('basic > ')
     if text.strip() == "": continue
-    result, error = basic.run('<stdin>', text)
+    result, error = runner.run('<stdin>', text)
 
     if error:
         print(error.as_string())
