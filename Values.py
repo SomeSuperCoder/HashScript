@@ -449,7 +449,7 @@ class BuiltInFunction(BaseFunction):
 
     #####################################
 
-    def execute_to_num(self, exec_ctx):
+    def execute_to_number(self, exec_ctx):
         res = RTResult()
         value = exec_ctx.symbol_table.get('value')
         if isinstance(value, String):
@@ -474,7 +474,25 @@ class BuiltInFunction(BaseFunction):
                 )
             )
 
-    execute_to_num.arg_names = ['value']
+    execute_to_number.arg_names = ['value']
+
+    def execute_to_string(self, exec_ctx):
+        res = RTResult()
+        value = exec_ctx.symbol_table.get('value')
+        if isinstance(value, String):
+            return res.success(value)
+        elif isinstance(value, Number):
+            return RTResult().success(String(str(value.value)))
+        else:
+            return res.failure(
+                RTError(
+                    value.pos_start, value.pos_end,
+                    f"Illegal operation. Cannot convert the type '{type(value).__name__}' to a string",
+                    exec_ctx
+                )
+            )
+
+    execute_to_string.arg_names = ['value']
 
     def execute_print(self, exec_ctx):
         print(str(exec_ctx.symbol_table.get('value')))
@@ -617,42 +635,6 @@ class BuiltInFunction(BaseFunction):
 
     execute_len.arg_names = ["list"]
 
-    # def execute_run(self, exec_ctx):
-    #     fn = exec_ctx.symbol_table.get("fn")
-    #
-    #     if not isinstance(fn, String):
-    #         return RTResult().failure(RTError(
-    #             self.pos_start, self.pos_end,
-    #             "Second argument must be string",
-    #             exec_ctx
-    #         ))
-    #
-    #     fn = fn.value
-    #
-    #     try:
-    #         with open(fn, "r") as f:
-    #             script = f.read()
-    #     except Exception as e:
-    #         return RTResult().failure(RTError(
-    #             self.pos_start, self.pos_end,
-    #             f"Failed to load script \"{fn}\"\n" + str(e),
-    #             exec_ctx
-    #         ))
-    #
-    #     _, error = run(fn, script)
-    #
-    #     if error:
-    #         return RTResult().failure(RTError(
-    #             self.pos_start, self.pos_end,
-    #             f"Failed to finish executing script \"{fn}\"\n" +
-    #             error.as_string(),
-    #             exec_ctx
-    #         ))
-    #
-    #     return RTResult().success(Number.null)
-    #
-    # execute_run.arg_names = ["fn"]
-
 
 BuiltInFunction.print = BuiltInFunction("print")
 BuiltInFunction.print_ret = BuiltInFunction("print_ret")
@@ -668,4 +650,5 @@ BuiltInFunction.pop = BuiltInFunction("pop")
 BuiltInFunction.extend = BuiltInFunction("extend")
 BuiltInFunction.len = BuiltInFunction("len")
 BuiltInFunction.run = BuiltInFunction("run")
-BuiltInFunction.to_num = BuiltInFunction("to_num")
+BuiltInFunction.to_number = BuiltInFunction("to_number")
+BuiltInFunction.to_string = BuiltInFunction("to_string")

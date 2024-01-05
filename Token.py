@@ -17,6 +17,8 @@ TT_LPAREN = 'LPAREN'
 TT_RPAREN = 'RPAREN'
 TT_LSQUARE = 'LSQUARE'
 TT_RSQUARE = 'RSQUARE'
+TT_LCURL = 'LCURL'
+TT_RCURL = 'RCURL'
 TT_EE = 'EE'
 TT_NE = 'NE'
 TT_LT = 'LT'
@@ -34,6 +36,9 @@ class Token:
         self.type = type_
         self.value = value
 
+        self.pos_start = 0
+        self.pos_end = 0
+
         if pos_start:
             self.pos_start = pos_start.copy()
             self.pos_end = pos_start.copy()
@@ -41,6 +46,7 @@ class Token:
 
         if pos_end:
             self.pos_end = pos_end.copy()
+
 
     def matches(self, type_, value):
         return self.type == type_ and self.value == value

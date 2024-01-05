@@ -7,6 +7,7 @@ from ParseResult import *
 # PARSER
 #######################################
 
+
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
@@ -267,7 +268,7 @@ class Parser:
             list_expr = res.register(self.list_expr())
             if res.error: return res
             return res.success(list_expr)
-
+        
         elif tok.matches(TT_KEYWORD, 'if'):
             if_expr = res.register(self.if_expr())
             if res.error: return res
@@ -385,7 +386,7 @@ class Parser:
             else:
                 return res.failure(InvalidSyntaxError(
                     self.current_tok.pos_start, self.current_tok.pos_end,
-                    f"Expected 'then'"
+                    f"Expected 'then' or ':'"
                 ))
 
         return res.success(else_case)
@@ -424,7 +425,7 @@ class Parser:
         if not self.current_tok.matches(TT_KEYWORD, 'then'):
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                f"Expected 'THEN'"
+                f"Expected 'THEN' or ':'"
             ))
 
         res.register_advancement()
@@ -516,7 +517,7 @@ class Parser:
         if not self.current_tok.matches(TT_KEYWORD, 'then'):
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                f"Expected 'THEN'"
+                f"Expected 'THEN' or ':'"
             ))
 
         res.register_advancement()
@@ -563,7 +564,7 @@ class Parser:
         if not self.current_tok.matches(TT_KEYWORD, 'then'):
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
-                f"Expected 'THEN'"
+                f"Expected 'THEN' or ':'"
             ))
 
         res.register_advancement()
